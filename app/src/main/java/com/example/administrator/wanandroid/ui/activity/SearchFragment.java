@@ -84,13 +84,12 @@ public class SearchFragment extends BaseMvpDialogFragment<SearchPresenter> imple
                     Toast.makeText(getActivity(), "请输入检索字段", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                searchHistorySet.add(key);
-                preferencesUtil.put("history", searchHistorySet);
-                mSearchEdit.setText("");
-                //todo:实时刷新历史列表失败
                 if (isRepeat()) {
+                    searchHistorySet.add(key);
+                    preferencesUtil.put("history", searchHistorySet);
                     mAdapter.addData(key);
                 }
+                mSearchEdit.setText("");
                 jumpSearchHistoryList(key);
                 break;
             case R.id.search_history_clear_all_tv:
