@@ -1,10 +1,13 @@
 package com.example.administrator.wanandroid.net.cookie;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.example.administrator.wanandroid.app.App;
+import com.example.administrator.wanandroid.util.PreferencesUtil;
 import com.example.administrator.wanandroid.util.logger.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.CertificateFactory;
@@ -24,7 +27,10 @@ import okhttp3.Cache;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class MyOkHttpClient {
@@ -36,12 +42,9 @@ public class MyOkHttpClient {
 
     private static PersistentCookieStore cookieStore;
 
-    public static PersistentCookieStore getCookieStore() {
-        return cookieStore;
-    }
-
     // 将构造函数封掉，只能通过对外接口来获取HttpClient实例
     private MyOkHttpClient() {
+
     }
 
     public static synchronized OkHttpClient getSaveHttpClient() {
@@ -91,6 +94,22 @@ public class MyOkHttpClient {
             }
         }
         return mHttpClient;
+    }
+
+    public  Interceptor getHeaderInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                PreferencesUtil preferencesUtil = new PreferencesUtil("login_info");
+                Request original = chain.request();
+                Request.Builder requestBuilder = original.newBuilder()
+                        //添加Token
+                        .header("Cookie", "loginUserName=" + "805058027")
+                        .header("Cookie", "loginUserPassword=" + "WSJ5211314");
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
+            }
+        };
     }
 
     /*

@@ -68,7 +68,7 @@ public interface APIService {
      * 知识体系下的文章
      */
     @GET("article/list/{page}/json")
-    Observable<BaseObjectBean<TreeListBean>> getTreeList(@Path("page") int num,
+    Observable<BaseObjectBean<TreeListBean>> getTreeList(@Path("page") int page,
                                                          @Query("cid ") int cid);
 
     /**

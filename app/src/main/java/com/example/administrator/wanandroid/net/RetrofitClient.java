@@ -19,7 +19,7 @@ public class RetrofitClient {
 
     private static volatile RetrofitClient instance;
     private APIService apiService;
-    private String baseUrl = "http://www.wanandroid.com/";
+    private String baseUrl = "https://www.wanandroid.com/";
 
     private RetrofitClient() {
 
