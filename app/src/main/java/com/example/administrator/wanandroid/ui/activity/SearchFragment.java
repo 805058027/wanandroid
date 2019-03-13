@@ -141,12 +141,11 @@ public class SearchFragment extends BaseMvpDialogFragment<SearchPresenter> imple
         if (searchHistorySet == null) {
             searchHistorySet = new HashSet<>();
             mSearchHistoryNullTintTv.setVisibility(View.VISIBLE);
-        } else {
-            mSearchHistoryRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-            searchHistoryList = new ArrayList(searchHistorySet);
-            mAdapter = new SearchHistoryAdapter(R.layout.item_search_history, searchHistoryList);
-            mSearchHistoryRv.setAdapter(mAdapter);
         }
+        mSearchHistoryRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchHistoryList = new ArrayList(searchHistorySet);
+        mAdapter = new SearchHistoryAdapter(R.layout.item_search_history, searchHistoryList);
+        mSearchHistoryRv.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -157,6 +156,7 @@ public class SearchFragment extends BaseMvpDialogFragment<SearchPresenter> imple
                 }
             }
         });
+
     }
 
     @Override
